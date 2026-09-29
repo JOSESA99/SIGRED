@@ -6,10 +6,10 @@ Fecha de revisión: 2026-09-29.
 
 - Ruta local: `C:\Users\Santi\Proyectos\SIGRED`.
 - Rama actual: `master`.
-- Git reporta que todavía no hay commits.
-- El directorio `backend/` está sin seguimiento en Git.
+- Repositorio remoto: `https://github.com/JOSESA99/SIGRED`.
+- La rama local sigue a `origin/master`.
+- Primer commit publicado: `c1f11b1 chore: initial SIGRED backend setup`.
 - No se encontró frontend React/TypeScript en los archivos listados del repositorio.
-- No existían documentos del proyecto en la raíz antes de esta revisión.
 
 ## Backend Django
 
@@ -19,6 +19,7 @@ Archivos y componentes comprobados:
 
 - Proyecto Django en `backend/config`.
 - Aplicación `accounts`.
+- Aplicación `inventory` registrada en `INSTALLED_APPS`.
 - Modelo personalizado `accounts.User` basado en `AbstractUser`.
 - `AUTH_USER_MODEL = "accounts.User"` configurado en `config/settings.py`.
 - `accounts` registrado en `INSTALLED_APPS`.
@@ -54,18 +55,32 @@ Resultado:
 
 - `System check identified no issues (0 silenced).`
 
-También se intentó una verificación de migraciones de solo lectura:
+También se generó, comprobó y aplicó la migración inicial de inventario:
 
 ```powershell
-.\.venv\Scripts\python.exe manage.py showmigrations
+.\.venv\Scripts\python.exe manage.py makemigrations inventory
+.\.venv\Scripts\python.exe manage.py makemigrations --check --dry-run
+.\.venv\Scripts\python.exe manage.py migrate inventory
 ```
 
-Resultado de esta sesión:
+Resultado:
 
-- Falló al conectar con SQL Server mediante ODBC Driver 18.
-- El error reportó problemas relacionados con cifrado/SSL y conexión a `DESKTOP-U3SQL29\SQL2025EDE`.
+- Se creó `inventory/migrations/0001_initial.py`.
+- La comprobación posterior devolvió `No changes detected`.
+- `mssql-django` 2.0.0 declara soporte para los índices parciales usados por las restricciones únicas opcionales.
+- La primera ejecución detectó una condición de índice filtrado incompatible con SQL Server y revirtió la transacción completa.
+- Se corrigieron las condiciones para usar `IS NOT NULL` y la segunda ejecución terminó con `Applying inventory.0001_initial... OK`.
+- `showmigrations inventory` confirma la migración como aplicada.
 
-Este fallo describe el estado observado en esta ejecución. El contexto recibido indica que anteriormente la conexión desde Django ya fue comprobada con `SELECT DB_NAME()` y devolvió `SIGRED`, y que las migraciones de `accounts`, `auth`, `admin`, `contenttypes` y `sessions` fueron aplicadas. Para continuar con cambios de base de datos será necesario confirmar nuevamente la conectividad local.
+La conexión a SQL Server falló dentro del entorno restringido de ejecución, pero funcionó al ejecutar Django con acceso al servicio local. No fue necesario cambiar el `.env`, el controlador ODBC ni las credenciales.
+
+Verificación de migraciones:
+
+```powershell
+.\.venv\Scripts\python.exe manage.py showmigrations inventory
+```
+
+Resultado: `[X] 0001_initial`.
 
 ## Implementado
 
@@ -74,16 +89,19 @@ Este fallo describe el estado observado en esta ejecución. El contexto recibido
 - Usuario personalizado preparado desde el inicio del proyecto.
 - Configuración de SQL Server por variables de entorno.
 - Administración de Django habilitada y rotulada para SIGRED.
+- Modelos iniciales del inventario compartido: unidades, ubicaciones, fabricantes, modelos, dispositivos, capacidades, identificadores externos y perfiles de credenciales por referencia.
+- Administración de inventario con búsquedas, filtros y edición de relaciones.
+- Migración inicial de inventario aplicada en SQL Server.
 
 ## Falta implementar
 
 - Frontend React con TypeScript.
-- Apps de dominio para inventario, respaldos/configuraciones y monitoreo/incidentes.
-- Modelos, migraciones, administración y permisos de inventario.
+- Permisos y grupos funcionales del inventario.
+- Apps de respaldos/configuraciones y monitoreo/incidentes.
 - Integración real con Oxidized.
 - Integración real con Zabbix.
 - Flujos de auditoría, reportes y paneles.
 - Datos de demostración controlados.
 - Pruebas automatizadas del dominio.
 
-En esta revisión no se crearon tablas de dominio ni se ejecutaron migraciones nuevas.
+En esta revisión se crearon las tablas del inventario compartido. No se cargaron datos reales ni de demostración.

@@ -1,6 +1,6 @@
 # Modelo de datos inicial propuesto
 
-Este documento propone un diseño inicial para revisar antes de crear modelos Django o migraciones. El punto de partida recomendado es el inventario compartido, porque respaldos y monitoreo dependen de identificar correctamente unidades, ubicaciones y dispositivos.
+Este documento define el diseño inicial de SIGRED. La primera etapa implementada corresponde al inventario compartido, porque respaldos y monitoreo dependen de identificar correctamente unidades, ubicaciones y dispositivos. Las secciones de respaldos, monitoreo, auditoría e integraciones continúan como propuesta para las siguientes etapas.
 
 ## Principios
 
