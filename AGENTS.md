@@ -1,5 +1,6 @@
 # Instrucciones para trabajar en SIGRED
 
+
 SIGRED es el Sistema de Gestión de Red para la OTI de la Universidad Nacional de San Martín. Antes de implementar cambios, leer:
 
 - `docs/CONTEXTO_PROYECTO.md`: contexto funcional, alcance y distribución del trabajo.

@@ -92,16 +92,36 @@ Resultado: `[X] 0001_initial`.
 - Modelos iniciales del inventario compartido: unidades, ubicaciones, fabricantes, modelos, dispositivos, capacidades, identificadores externos y perfiles de credenciales por referencia.
 - Administración de inventario con búsquedas, filtros y edición de relaciones.
 - Migración inicial de inventario aplicada en SQL Server.
+- Cinco grupos funcionales iniciales: administración, inventario, respaldos, monitoreo y consulta.
+- Comando idempotente `setup_sigred_demo` para preparar los grupos y datos de demostración sin borrar información existente.
+- Un dispositivo de demostración con unidad, ubicación, fabricante, modelo y cuatro capacidades asociadas.
+- Guía de trabajo compartida para que respaldos y monitoreo utilicen un solo frontend.
+- Validaciones de coherencia entre unidad, ubicación, fabricante, modelo y tipo de dispositivo.
+- Flujo funcional documentado entre el inventario, SIGRED y Oxidized antes de crear las tablas de respaldos.
+- Cuatro pruebas automatizadas de las reglas de consistencia del inventario.
+- Aplicación `backups` con políticas, programaciones, ejecuciones, intentos por dispositivo, versiones, comparaciones y planes de recuperación.
+- Migración inicial `backups/0001_initial.py` aplicada correctamente en SQL Server.
+- Permisos diferenciados para ejecutar respaldos, aprobar recuperaciones y registrar su ejecución.
+- Política semanal de demostración deshabilitada hasta validar una integración real con Oxidized.
+- Cinco pruebas automatizadas de las reglas principales del módulo de respaldos.
+- Cliente HTTP para la API de Oxidized con listado de nodos, recarga, envío a cola y consulta de configuración.
+- Configuración de Oxidized mediante variables de entorno, desactivada por defecto.
+- Cuatro pruebas simuladas del cliente de Oxidized sin conectarse a dispositivos reales.
+- Servicio de aplicación que crea una ejecución y un intento por cada dispositivo de una política.
+- Validación previa de capacidad e identificador Oxidized para ejecuciones no simuladas.
+- Comando `simulate_demo_backup`, limitado exclusivamente a dispositivos con `is_demo=True`.
+- Primera simulación completada con una ejecución exitosa, un intento y una versión ficticia.
+- Diecisiete pruebas automatizadas entre inventario, respaldos y cliente Oxidized.
 
 ## Falta implementar
 
 - Frontend React con TypeScript.
-- Permisos y grupos funcionales del inventario.
-- Apps de respaldos/configuraciones y monitoreo/incidentes.
+- Asignación de usuarios a grupos y ampliación de permisos cuando existan los módulos de respaldos y monitoreo.
+- App de monitoreo/incidentes.
+- Seguimiento de resultados reales devueltos por Oxidized y programador periódico para políticas activas.
 - Integración real con Oxidized.
 - Integración real con Zabbix.
 - Flujos de auditoría, reportes y paneles.
-- Datos de demostración controlados.
-- Pruebas automatizadas del dominio.
+- Ampliación de pruebas automatizadas para restricciones, permisos y futuros módulos.
 
-En esta revisión se crearon las tablas del inventario compartido. No se cargaron datos reales ni de demostración.
+Los registros creados por `setup_sigred_demo` usan nombres y códigos `DEMO`; el dispositivo queda marcado con `is_demo=True`. No representan equipos reales de la universidad. Se ejecutó dos veces el comando y se comprobó que mantuvo una sola copia de cada registro.
