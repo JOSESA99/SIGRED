@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "accounts.apps.AccountsConfig",
     "inventory.apps.InventoryConfig",
+    "backups.apps.BackupsConfig",
 ]
 
 MIDDLEWARE = [
@@ -94,3 +95,8 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "accounts.User"
+
+# Oxidized se mantiene desactivado hasta instalar y validar el servicio externo.
+OXIDIZED_ENABLED = os.getenv("OXIDIZED_ENABLED", "false").lower() == "true"
+OXIDIZED_BASE_URL = os.getenv("OXIDIZED_BASE_URL", "http://127.0.0.1:8888")
+OXIDIZED_TIMEOUT_SECONDS = int(os.getenv("OXIDIZED_TIMEOUT_SECONDS", "10"))
