@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import Q
 
@@ -49,6 +50,13 @@ class InstitutionalUnit(TimeStampedModel):
     def __str__(self):
         return self.name
 
+    def clean(self):
+        super().clean()
+        if self.pk and self.parent_id == self.pk:
+            raise ValidationError(
+                {"parent": "Una unidad no puede depender de sí misma."}
+            )
+
 
 class Location(TimeStampedModel):
     class LocationType(models.TextChoices):
@@ -91,6 +99,18 @@ class Location(TimeStampedModel):
 
     def __str__(self):
         return f"{self.name} ({self.unit})"
+
+    def clean(self):
+        super().clean()
+        errors = {}
+        if self.pk and self.parent_id == self.pk:
+            errors["parent"] = "Una ubicación no puede contenerse a sí misma."
+        elif self.parent_id and self.unit_id != self.parent.unit_id:
+            errors["parent"] = (
+                "La ubicación superior debe pertenecer a la misma unidad institucional."
+            )
+        if errors:
+            raise ValidationError(errors)
 
 
 class Vendor(models.Model):
@@ -244,6 +264,33 @@ class Device(TimeStampedModel):
 
     def __str__(self):
         return self.name
+
+    def clean(self):
+        super().clean()
+        errors = {}
+
+        if self.location_id and self.unit_id != self.location.unit_id:
+            errors["location"] = (
+                "La ubicación debe pertenecer a la misma unidad que el dispositivo."
+            )
+
+        if self.model_id:
+            if not self.vendor_id:
+                errors["vendor"] = (
+                    "Debe indicar el fabricante correspondiente al modelo seleccionado."
+                )
+            elif self.vendor_id != self.model.vendor_id:
+                errors["model"] = (
+                    "El modelo seleccionado no pertenece al fabricante indicado."
+                )
+
+            if self.device_type != self.model.device_type:
+                errors["device_type"] = (
+                    "El tipo del dispositivo debe coincidir con el tipo de su modelo."
+                )
+
+        if errors:
+            raise ValidationError(errors)
 
 
 class DeviceCapability(TimeStampedModel):
