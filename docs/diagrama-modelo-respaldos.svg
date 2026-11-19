@@ -1,0 +1,164 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1960" height="1030" viewBox="0 0 1960 1030" role="img" aria-labelledby="title description">
+  <title id="title">Modelo de datos de políticas y respaldos de SIGRED</title>
+  <desc id="description">Diagrama entidad-relación con políticas, asignaciones, dispositivos, programaciones, ejecuciones, intentos y referencias de versiones.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f5f7fb; }
+      .card { fill: #ffffff; stroke: #b7c5d8; stroke-width: 2; }
+      .head { fill: #163b68; }
+      .head2 { fill: #21588b; }
+      .title { fill: #ffffff; font: 700 22px "Segoe UI", Arial, sans-serif; }
+      .field { fill: #172b4d; font: 17px Consolas, "Courier New", monospace; }
+      .meta { fill: #54657c; font: 15px "Segoe UI", Arial, sans-serif; }
+      .caption { fill: #19324f; font: 700 26px "Segoe UI", Arial, sans-serif; }
+      .subtitle { fill: #52657d; font: 16px "Segoe UI", Arial, sans-serif; }
+      .edge { fill: none; stroke: #496987; stroke-width: 2.5; }
+      .edge-dashed { fill: none; stroke: #ae6b15; stroke-width: 2.5; stroke-dasharray: 9 7; }
+      .label-bg { fill: #f5f7fb; }
+      .edge-label { fill: #314c68; font: 15px "Segoe UI", Arial, sans-serif; }
+      .warning { fill: #fff3dc; stroke: #e7bd72; stroke-width: 1.5; }
+      .warning-text { fill: #68460d; font: 15px "Segoe UI", Arial, sans-serif; }
+      .note { fill: #eaf0f7; stroke: #c2d0df; stroke-width: 1.5; }
+      .note-title { fill: #163b68; font: 700 16px "Segoe UI", Arial, sans-serif; }
+      .note-text { fill: #344b63; font: 14px "Segoe UI", Arial, sans-serif; }
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 z" fill="#496987"/>
+    </marker>
+    <marker id="arrowDashed" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 z" fill="#ae6b15"/>
+    </marker>
+  </defs>
+  <rect class="bg" width="1960" height="1030"/>
+  <text class="caption" x="48" y="48">Modelo de datos de políticas y respaldos - SIGRED</text>
+  <text class="subtitle" x="48" y="77">Relaciones persistidas en los modelos Django. PK = clave primaria; FK = clave foránea; UK = valor único.</text>
+
+  <!-- Relationships are drawn first so that entity cards remain legible. -->
+  <path class="edge" marker-end="url(#arrow)" d="M440 215 H580"/>
+  <rect class="label-bg" x="458" y="185" width="105" height="25" rx="5"/>
+  <text class="edge-label" x="465" y="203">1 a 0..N</text>
+
+  <path class="edge" marker-end="url(#arrow)" d="M260 350 V560"/>
+  <rect class="label-bg" x="270" y="438" width="100" height="25" rx="5"/>
+  <text class="edge-label" x="278" y="456">1 a 0..N</text>
+
+  <path class="edge" marker-end="url(#arrow)" d="M440 285 H480 V385 H1745 V320"/>
+  <rect class="label-bg" x="1030" y="355" width="105" height="25" rx="5"/>
+  <text class="edge-label" x="1037" y="373">1 a 0..N</text>
+
+  <path class="edge" marker-end="url(#arrow)" d="M960 215 H1080"/>
+  <rect class="label-bg" x="970" y="185" width="105" height="25" rx="5"/>
+  <text class="edge-label" x="977" y="203">0..N a 1</text>
+
+  <path class="edge" marker-end="url(#arrow)" d="M1380 320 V560"/>
+  <rect class="label-bg" x="1466" y="335" width="105" height="25" rx="5"/>
+  <text class="edge-label" x="1388" y="443">1 a 0..N</text>
+
+  <path class="edge-dashed" marker-end="url(#arrowDashed)" d="M1470 640 H1540"/>
+  <text class="edge-label" x="1478" y="628">external_ref</text>
+
+  <path class="edge" marker-end="url(#arrow)" d="M440 700 H580"/>
+  <rect class="label-bg" x="954" y="670" width="105" height="25" rx="5"/>
+  <text class="edge-label" x="458" y="688">1 a 0..N</text>
+
+  <path class="edge" marker-end="url(#arrow)" d="M1120 320 V430 H760 V560"/>
+  <rect class="label-bg" x="880" y="405" width="105" height="25" rx="5"/>
+  <text class="edge-label" x="887" y="423">1 a 0..N</text>
+
+  <path class="edge-dashed" marker-end="url(#arrowDashed)" d="M940 790 H1080"/>
+  <rect class="label-bg" x="950" y="760" width="125" height="25" rx="5"/>
+  <text class="edge-label" x="957" y="778">referencia textual</text>
+
+  <!-- Entities -->
+  <g>
+    <rect class="card" x="80" y="110" width="360" height="240" rx="12"/>
+    <path class="head" d="M92 110 H428 Q440 110 440 122 V158 H80 V122 Q80 110 92 110 Z"/>
+    <text class="title" x="104" y="143">BackupPolicy</text>
+    <text class="field" x="104" y="190">id : bigint PK</text>
+    <text class="field" x="104" y="218">name : varchar UK</text>
+    <text class="field" x="104" y="246">is_active : boolean</text>
+    <text class="field" x="104" y="274">default_retry_count</text>
+    <text class="field" x="104" y="302">default_timeout_seconds</text>
+    <text class="field" x="104" y="330">created_by_id : FK User</text>
+  </g>
+  <g>
+    <rect class="card" x="580" y="110" width="380" height="210" rx="12"/>
+    <path class="head2" d="M592 110 H948 Q960 110 960 122 V158 H580 V122 Q580 110 592 110 Z"/>
+    <text class="title" x="604" y="143">BackupPolicyDevice</text>
+    <text class="field" x="604" y="190">id : bigint PK</text>
+    <text class="field" x="604" y="218">policy_id : FK</text>
+    <text class="field" x="604" y="246">device_id : FK</text>
+    <text class="field" x="604" y="274">enabled : boolean</text>
+    <text class="meta" x="604" y="301">UK compuesta: policy + device</text>
+  </g>
+  <g>
+    <rect class="card" x="1080" y="110" width="380" height="210" rx="12"/>
+    <path class="head" d="M1092 110 H1448 Q1460 110 1460 122 V158 H1080 V122 Q1080 110 1092 110 Z"/>
+    <text class="title" x="1104" y="143">Device (inventario)</text>
+    <text class="field" x="1104" y="190">id : bigint PK</text>
+    <text class="field" x="1104" y="218">name : varchar</text>
+    <text class="field" x="1104" y="246">hostname : varchar</text>
+    <text class="field" x="1104" y="274">management_ip : IP</text>
+    <text class="field" x="1104" y="302">is_demo : boolean</text>
+  </g>
+  <g>
+    <rect class="card" x="1580" y="110" width="330" height="210" rx="12"/>
+    <path class="head2" d="M1592 110 H1898 Q1910 110 1910 122 V158 H1580 V122 Q1580 110 1592 110 Z"/>
+    <text class="title" x="1604" y="143">BackupSchedule</text>
+    <text class="field" x="1604" y="190">id : bigint PK</text>
+    <text class="field" x="1604" y="218">policy_id : FK</text>
+    <text class="field" x="1604" y="246">frequency, cron_expression</text>
+    <text class="field" x="1604" y="274">timezone, next_run_at</text>
+    <text class="field" x="1604" y="302">is_active : boolean</text>
+  </g>
+
+  <g>
+    <rect class="card" x="80" y="560" width="360" height="210" rx="12"/>
+    <path class="head2" d="M92 560 H428 Q440 560 440 572 V608 H80 V572 Q80 560 92 560 Z"/>
+    <text class="title" x="104" y="593">BackupRun</text>
+    <text class="field" x="104" y="640">id : bigint PK</text>
+    <text class="field" x="104" y="668">policy_id : FK</text>
+    <text class="field" x="104" y="696">triggered_by_id : FK nullable</text>
+    <text class="field" x="104" y="724">trigger_type, status</text>
+    <text class="field" x="104" y="752">started_at, finished_at</text>
+  </g>
+  <g>
+    <rect class="card" x="580" y="560" width="360" height="280" rx="12"/>
+    <path class="head" d="M592 560 H928 Q940 560 940 572 V608 H580 V572 Q580 560 592 560 Z"/>
+    <text class="title" x="604" y="593">BackupAttempt</text>
+    <text class="field" x="604" y="640">id : bigint PK</text>
+    <text class="field" x="604" y="668">run_id : FK</text>
+    <text class="field" x="604" y="696">device_id : FK</text>
+    <text class="field" x="604" y="724">attempt_number, status</text>
+    <text class="field" x="604" y="752">started_at, finished_at</text>
+    <text class="field" x="604" y="780">oxidized_node_ref</text>
+    <text class="field" x="604" y="808">oxidized_version_ref</text>
+    <text class="meta" x="604" y="830">UK compuesta: run + device + intento</text>
+  </g>
+  <g>
+    <rect class="card" x="1080" y="560" width="390" height="260" rx="12"/>
+    <path class="head2" d="M1092 560 H1458 Q1470 560 1470 572 V608 H1080 V572 Q1080 560 1092 560 Z"/>
+    <text class="title" x="1104" y="593">ConfigVersion</text>
+    <text class="field" x="1104" y="640">id : bigint PK</text>
+    <text class="field" x="1104" y="668">device_id : FK</text>
+    <text class="field" x="1104" y="696">source : oxidized/demo/...</text>
+    <text class="field" x="1104" y="724">external_ref</text>
+    <text class="field" x="1104" y="752">collected_at, checksum</text>
+    <text class="field" x="1104" y="780">created_by_id : FK nullable</text>
+    <text class="meta" x="1104" y="808">UK: device + source + external_ref</text>
+  </g>
+  <g>
+    <rect class="note" x="1540" y="560" width="370" height="145" rx="12"/>
+    <text class="note-title" x="1560" y="592">Oxidized - sistema externo</text>
+    <text class="note-text" x="1560" y="622">Conserva el repositorio y las</text>
+    <text class="note-text" x="1560" y="645">configuraciones versionadas. SIGRED</text>
+    <text class="note-text" x="1560" y="668">guarda metadatos y referencias.</text>
+    <text class="note-text" x="1560" y="691">El contenido no es un campo de ConfigVersion.</text>
+  </g>
+  <g>
+    <rect class="warning" x="80" y="850" width="1390" height="105" rx="12"/>
+    <text class="warning-text" x="104" y="882">Importante: BackupRun no tiene FK a BackupSchedule; solo identifica la política y el tipo de disparador.</text>
+    <text class="warning-text" x="104" y="912">oxidized_version_ref es texto, no FK a ConfigVersion. La relación punteada representa una referencia no garantizada por la BD.</text>
+    <text class="warning-text" x="104" y="940">Los campos mostrados son una selección de los modelos; no reemplaza el diccionario completo de datos.</text>
+  </g>
+</svg>

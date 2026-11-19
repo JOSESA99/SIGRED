@@ -60,7 +60,7 @@ DATABASES = {
         "USER": os.environ["DB_USER"],
         "PASSWORD": os.environ["DB_PASSWORD"],
         "HOST": os.environ["DB_HOST"],
-        "PORT": "",
+        "PORT": os.getenv("DB_PORT", ""),
         "OPTIONS": {
             "driver": os.environ["DB_DRIVER"],
             # Solo para la conexión al servidor local de desarrollo.
