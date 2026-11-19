@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="850" viewBox="0 0 1600 850" role="img" aria-labelledby="title description">
+  <title id="title">Trazabilidad del respaldo de SIGRED hacia Oxidized</title>
+  <desc id="description">Flujo conceptual que muestra políticas, dispositivos, ejecuciones, intentos, metadatos de versiones y el repositorio externo de Oxidized.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f5f7fb; }
+      .panel { fill: #edf3fa; stroke: #b7c5d8; stroke-width: 2; }
+      .external-panel { fill: #fff8eb; stroke: #dfc28e; stroke-width: 2; }
+      .box { fill: #ffffff; stroke: #aebed0; stroke-width: 2; }
+      .sigred { fill: #163b68; }
+      .external { fill: #9a5a08; }
+      .title { fill: #ffffff; font: 700 20px "Segoe UI", Arial, sans-serif; }
+      .heading { fill: #19324f; font: 700 25px "Segoe UI", Arial, sans-serif; }
+      .subheading { fill: #51667e; font: 16px "Segoe UI", Arial, sans-serif; }
+      .text { fill: #19324f; font: 700 17px "Segoe UI", Arial, sans-serif; }
+      .detail { fill: #4a5e74; font: 14px "Segoe UI", Arial, sans-serif; }
+      .line { fill: none; stroke: #496987; stroke-width: 3; }
+      .dashed { fill: none; stroke: #ae6b15; stroke-width: 3; stroke-dasharray: 10 8; }
+      .label { fill: #314c68; font: 14px "Segoe UI", Arial, sans-serif; }
+      .amber { fill: #79500f; font: 14px "Segoe UI", Arial, sans-serif; }
+      .legend { fill: #263d55; font: 14px "Segoe UI", Arial, sans-serif; }
+    </style>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 z" fill="#496987"/>
+    </marker>
+    <marker id="arrowDashed" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L10,5 L0,10 z" fill="#ae6b15"/>
+    </marker>
+  </defs>
+  <rect class="bg" width="1600" height="850"/>
+  <text class="heading" x="48" y="52">Trazabilidad de políticas y respaldos</text>
+  <text class="subheading" x="48" y="82">Vista funcional del almacenamiento: SIGRED registra la operación y referencia el historial conservado por Oxidized.</text>
+  <rect class="panel" x="40" y="115" width="1030" height="650" rx="18"/>
+  <text class="text" x="68" y="153">SIGRED - metadatos y seguimiento</text>
+  <rect class="external-panel" x="1100" y="115" width="460" height="650" rx="18"/>
+  <text class="text" x="1128" y="153">Oxidized - sistema externo</text>
+
+  <!-- Connectors -->
+  <path class="line" marker-end="url(#arrow)" d="M250 315 H315"/>
+  <text class="label" x="256" y="300">asigna</text>
+
+  <path class="line" marker-end="url(#arrow)" d="M215 260 V165 H425 V180"/>
+  <text class="label" x="270" y="178">define programación</text>
+
+  <path class="line" marker-end="url(#arrow)" d="M160 375 V500 H840 V285 H860"/>
+  <text class="label" x="470" y="488">origina ejecución</text>
+
+  <path class="line" marker-end="url(#arrow)" d="M535 315 H600"/>
+  <text class="label" x="544" y="300">vincula</text>
+
+  <path class="line" marker-end="url(#arrow)" d="M975 335 V390"/>
+  <text class="label" x="987" y="370">registra intentos</text>
+
+  <path class="line" marker-end="url(#arrow)" d="M710 385 V450 H860"/>
+  <text class="label" x="720" y="433">dispositivo del intento</text>
+
+  <path class="line" marker-end="url(#arrow)" d="M770 385 V620 H1245 V575"/>
+  <text class="label" x="940" y="610">device_id FK</text>
+
+  <path class="dashed" marker-end="url(#arrowDashed)" d="M1090 485 H1120"/>
+  <text class="amber" x="940" y="470">oxidized_version_ref</text>
+
+  <path class="dashed" marker-end="url(#arrowDashed)" d="M1245 575 V635"/>
+  <text class="amber" x="1260" y="612">external_ref</text>
+
+  <path class="dashed" marker-end="url(#arrowDashed)" d="M535 235 H840 V215 H975 V230"/>
+  <text class="amber" x="570" y="204">disparo posible; BackupRun no guarda FK a Schedule</text>
+
+  <!-- SIGRED entities -->
+  <g>
+    <rect class="box" x="85" y="260" width="165" height="115" rx="12"/>
+    <path class="sigred" d="M97 260 H238 Q250 260 250 272 V295 H85 V272 Q85 260 97 260 Z"/>
+    <text class="title" x="103" y="284">Política</text>
+    <text class="detail" x="103" y="322">BackupPolicy</text>
+    <text class="detail" x="103" y="346">parámetros y creador</text>
+  </g>
+  <g>
+    <rect class="box" x="315" y="180" width="220" height="110" rx="12"/>
+    <path class="sigred" d="M327 180 H523 Q535 180 535 192 V215 H315 V192 Q315 180 327 180 Z"/>
+    <text class="title" x="333" y="204">Programación</text>
+    <text class="detail" x="333" y="242">BackupSchedule</text>
+    <text class="detail" x="333" y="266">frecuencia y próxima fecha</text>
+  </g>
+  <g>
+    <rect class="box" x="315" y="300" width="220" height="115" rx="12"/>
+    <path class="sigred" d="M327 300 H523 Q535 300 535 312 V335 H315 V312 Q315 300 327 300 Z"/>
+    <text class="title" x="333" y="324">Asignación</text>
+    <text class="detail" x="333" y="362">BackupPolicyDevice</text>
+    <text class="detail" x="333" y="386">política y dispositivo</text>
+  </g>
+  <g>
+    <rect class="box" x="600" y="260" width="220" height="125" rx="12"/>
+    <path class="sigred" d="M612 260 H808 Q820 260 820 272 V295 H600 V272 Q600 260 612 260 Z"/>
+    <text class="title" x="618" y="284">Dispositivo</text>
+    <text class="detail" x="618" y="322">inventory.Device</text>
+    <text class="detail" x="618" y="346">identidad e inventario</text>
+    <text class="detail" x="618" y="370">is_demo distingue demos</text>
+  </g>
+  <g>
+    <rect class="box" x="860" y="230" width="230" height="105" rx="12"/>
+    <path class="sigred" d="M872 230 H1078 Q1090 230 1090 242 V265 H860 V242 Q860 230 872 230 Z"/>
+    <text class="title" x="878" y="254">Ejecución</text>
+    <text class="detail" x="878" y="292">BackupRun</text>
+    <text class="detail" x="878" y="316">política, estado y tiempos</text>
+  </g>
+  <g>
+    <rect class="box" x="860" y="390" width="230" height="190" rx="12"/>
+    <path class="sigred" d="M872 390 H1078 Q1090 390 1090 402 V425 H860 V402 Q860 390 872 390 Z"/>
+    <text class="title" x="878" y="414">Intento por dispositivo</text>
+    <text class="detail" x="878" y="452">BackupAttempt</text>
+    <text class="detail" x="878" y="476">estado, tiempos y errores</text>
+    <text class="detail" x="878" y="500">oxidized_node_ref</text>
+    <text class="detail" x="878" y="524">oxidized_version_ref</text>
+    <text class="detail" x="878" y="548">número de intento</text>
+  </g>
+  <g>
+    <rect class="box" x="1120" y="430" width="250" height="145" rx="12"/>
+    <path class="sigred" d="M1132 430 H1358 Q1370 430 1370 442 V465 H1120 V442 Q1120 430 1132 430 Z"/>
+    <text class="title" x="1138" y="454">Versión de configuración</text>
+    <text class="detail" x="1138" y="492">ConfigVersion</text>
+    <text class="detail" x="1138" y="516">origen, fecha, checksum, tamaño</text>
+    <text class="detail" x="1138" y="540">external_ref; no guarda contenido</text>
+    <text class="detail" x="1138" y="564">relación FK con Device</text>
+  </g>
+  <g>
+    <rect class="box" x="1120" y="635" width="250" height="90" rx="12"/>
+    <path class="external" d="M1132 635 H1358 Q1370 635 1370 647 V670 H1120 V647 Q1120 635 1132 635 Z"/>
+    <text class="title" x="1138" y="659">Repositorio Oxidized</text>
+    <text class="detail" x="1138" y="697">nodos y configuraciones versionadas</text>
+  </g>
+
+  <line class="line" x1="70" y1="805" x2="130" y2="805"/>
+  <text class="legend" x="142" y="810">Relación persistida por FK en SIGRED</text>
+  <line class="dashed" x1="500" y1="805" x2="560" y2="805"/>
+  <text class="legend" x="572" y="810">Referencia externa o asociación no garantizada por FK</text>
+</svg>

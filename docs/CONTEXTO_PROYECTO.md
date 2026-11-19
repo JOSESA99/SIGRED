@@ -1,6 +1,6 @@
 # Contexto del proyecto SIGRED
 
-SIGRED significa Sistema de Gestión de Red. Es un proyecto de prácticas preprofesionales desarrollado por Santiago y Kevin para la Oficina de Tecnología e Información (OTI) de la Universidad Nacional de San Martín, Perú.
+SIGRED significa Sistema de Gestión de Red. Es un proyecto de prácticas preprofesionales desarrollado por Santiago para la Oficina de Tecnología e Información (OTI) de la Universidad Nacional de San Martín, Perú.
 
 ## Problema
 
@@ -12,11 +12,9 @@ SIGRED debe ser un sistema completo y mantenible, con funciones justificadas por
 
 ## Distribución del trabajo
 
-- Santiago: módulo de respaldos y gestión de configuraciones.
-- Kevin: módulo de monitoreo e incidentes.
-- Ambos: inventario común, usuarios, permisos e integración general.
+- Santiago: módulo de respaldos y gestión de configuraciones, inventario común, usuarios, permisos e integración general.
 
-El trabajo abarca este ciclo hasta el 4 de diciembre de 2026 y continuará aproximadamente de marzo a julio de 2027. Se desarrollará progresivamente el mismo sistema.
+
 
 ## Alcance funcional propuesto
 
@@ -40,22 +38,6 @@ Responsable principal: Santiago.
 - Validación y cobertura de respaldos.
 - Preparación de recuperaciones supervisadas.
 - Auditoría de acciones.
-
-### Monitoreo e incidentes
-
-Responsable principal: Kevin.
-
-- Disponibilidad de dispositivos.
-- Interfaces y métricas compatibles con cada equipo.
-- Reglas y umbrales de alertas.
-- Eventos e incidentes.
-- Reconocimiento, asignación, seguimiento y cierre de incidentes.
-- Ventanas de mantenimiento.
-- Dependencias y topología cuando existan datos suficientes.
-- Historial e indicadores.
-
-### Funciones compartidas
-
 - Autenticación y permisos por función.
 - Panel general y vistas detalladas por dispositivo.
 - Informes y auditoría.
